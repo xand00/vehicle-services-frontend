@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import apolloClient from "../lib/apollo-client";
-import { GET_SERVICE, GET_SERVICES, GET_SERVICES_PROMOTION, GET_TESTIMONIALS, GET_VEHICLE_BRANDS } from "./graphqlQueries";
+import { CREATE_SERVICES_REQUEST, GET_SERVICE, GET_SERVICES, GET_SERVICES_PROMOTION, GET_TESTIMONIALS, GET_VEHICLE_BRANDS } from "./graphqlQueries";
 import normalizeResponseFromStrapi from "./normalizeResponseFromStrapi";
 
 export function getStrapiURL(path) {
@@ -40,6 +40,14 @@ async function query(string, payload = null) {
   return await apolloClient.query(queryObject)
 }
 
+async function mutate(string, payload = null) {
+  const mutateObject = {
+    mutation: gql(string)
+  };
+  if(payload) mutateObject.variables = payload;
+  return await apolloClient.mutate(mutateObject)
+}
+
 export async function getServicesPromotion() {
   return normalizeResponseFromStrapi(await query(GET_SERVICES_PROMOTION)).data.servicesPromotion;
 }
@@ -58,4 +66,9 @@ export async function getTestimonials() {
 
 export async function getVehicleBrands() {
   return normalizeResponseFromStrapi(await query(GET_VEHICLE_BRANDS)).data.vehicleBrands;
+}
+
+export async function createServicesRequest(data) {
+  console.log(CREATE_SERVICES_REQUEST(JSON.stringify(data).replace(/"([^"]+)":/g, '$1:')))
+  return normalizeResponseFromStrapi(await mutate(CREATE_SERVICES_REQUEST(JSON.stringify(data).replace(/"([^"]+)":/g, '$1:'))));
 }

@@ -6,9 +6,12 @@ const Footer = () => {
   return (
     <div className="p-10 text-white bg-gray-900">
       <div className="container grid grid-rows-auto lg:grid-cols-3 lg:grid-rows-auto gap-10">
-        <div className="grid justify-items-center w-full justify-self-center">
-          <FeedbackForm></FeedbackForm>
+        <div>
+          
         </div>
+        {/* <div className="grid justify-items-center w-full justify-self-center">
+          <FeedbackForm></FeedbackForm>
+        </div> */}
         <div className="grid w-full justify-self-center">
           <Sitemap></Sitemap>
         </div>

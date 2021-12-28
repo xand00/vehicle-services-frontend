@@ -5,11 +5,15 @@ import "../styles/globals.scss"
 import Layout from "../components/layout/layout"
 import { store } from '../app/store'
 import { Provider } from 'react-redux'
+import { ApolloProvider } from "@apollo/client"
+import apolloClient from "../lib/apollo-client"
 
 
 const MyApp = ({ Component, pageProps }) => {
+  
   return (
     <Provider store={store}>
+      <ApolloProvider client={apolloClient}>
         <Layout>
           <Head>
             <meta
@@ -20,6 +24,7 @@ const MyApp = ({ Component, pageProps }) => {
           </Head>
           <Component {...pageProps} />
         </Layout>
+      </ApolloProvider>
     </Provider>
   )
 }

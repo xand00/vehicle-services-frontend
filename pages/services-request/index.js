@@ -1,6 +1,6 @@
 import PageTitle from "../../components/page-title"
 import { useRef, useState } from "react"
-import { getServices, getVehicleBrands } from "../../utils/api"
+import { createServicesRequest, getServices, getVehicleBrands } from "../../utils/api"
 import parsePhoneNumber from "libphonenumber-js"
 import getInputNameToErrorList from "../../utils/getInputNameToErrorList"
 import {
@@ -16,7 +16,8 @@ import { openModal } from "../../features/modal/modalSlice"
 import { useDispatch } from "react-redux"
 import ThankYouForRequest from "../../components/modals/thank-you-for-request"
 import russianPhoneNumberMask from "../../utils/russianPhoneNumberMask"
-import emptyFn from "../../utils/emptyFn"
+import { useMutation } from "@apollo/client"
+import { CREATE_SERVICES_REQUEST } from "../../utils/graphqlQueries"
 
 export async function getStaticProps() {
   const vehicleBrands = await getVehicleBrands()
@@ -42,6 +43,8 @@ function setHiddenPhoneInputs(parsedPhoneNumber = null, phoneNumberSetter, count
 // Add rounded-md class to Listbox.Button and Listbox.Options if you want rounded design
 
 const ServicesRequest = ({ vehicleBrands, services }) => {
+  const [addServiceRequest, { data, loading, error }] = useMutation(CREATE_SERVICES_REQUEST);
+
   const formRef = useRef()
   const submitFormRef = useRef()
   const dispatch = useDispatch();
@@ -49,12 +52,15 @@ const ServicesRequest = ({ vehicleBrands, services }) => {
   const [fullPhoneNumber, setFullPhoneNumber] = useState(() => "")
   const [phoneNumber, setPhoneNumber] = useState(() => "")
   const [countryCode, setCountryCode] = useState(() => "")
+  const [firstName, setFirstName] = useState(() => "")
+  const [lastName, setLastName] = useState(() => "")
 
   const handleFullPhoneNumberInput = e => {
-    const fullPhoneNumber = e.target.value;
-    setFullPhoneNumber(fullPhoneNumber)
-    setHiddenPhoneInputs(parsePhoneNumber(fullPhoneNumber), setPhoneNumber, setCountryCode)
-    console.log(phoneNumber, countryCode);
+    setFullPhoneNumber(e.target.value)
+    setTimeout(() => {
+      const value = e.target.value.replace(/\D+/g, '');
+      setHiddenPhoneInputs(parsePhoneNumber(value, "RU"), setPhoneNumber, setCountryCode)
+    })
   }
 
   const [touchedInputs, setTouchedInputs] = useState(() => [])
@@ -80,7 +86,7 @@ const ServicesRequest = ({ vehicleBrands, services }) => {
       mergeWithPreviousTouchedInputs(invalidInputNameList);
     }
     setFormValidationErrors(formValidationObject)
-    return invalidInputNameList.length === 0 ? true : false;
+    return { formObject, isValid: invalidInputNameList.length === 0 };
   }
 
   const onChangeForm = e => {
@@ -92,9 +98,18 @@ const ServicesRequest = ({ vehicleBrands, services }) => {
     validateForm();
   }
 
-  const onHandleSubmit = e => {
-    const isValid = validateForm(true);
-    if(!isValid) retaurn;
+  const onHandleSubmit = async e => {
+    const { formObject, isValid } = validateForm(true);
+    if(!isValid) return;
+    delete formObject.fullPhoneNumber;
+    if(formObject.vehicle_brand === '') formObject.vehicle_brand = null;
+    if(formObject.vehicle_model === '') formObject.vehicle_model = null;
+    console.log(formObject)
+    await addServiceRequest({ variables: formObject })
+    setFirstName('');
+    setLastName('');
+    setFullPhoneNumber('');
+    formRef.current.reset();
     dispatch(openModal('thank-you-for-request'));
   }
 
@@ -146,6 +161,8 @@ const ServicesRequest = ({ vehicleBrands, services }) => {
             inputAttributeClassName={"w-1/2"}
             inputKeyToErrorList={formValidationErrors}
             touchedInputs={touchedInputs}
+            inputAttributeValue={firstName}
+            inputAttributeOnInput={e => setFirstName(e.target.value)}
           />
           <DefaultInputWithLabel
             label={"Фамилия"}
@@ -153,6 +170,8 @@ const ServicesRequest = ({ vehicleBrands, services }) => {
             inputAttributeClassName={"w-1/2"}
             inputKeyToErrorList={formValidationErrors}
             touchedInputs={touchedInputs}
+            inputAttributeValue={lastName}
+            inputAttributeOnInput={e => setLastName(e.target.value)}
           />
           <DefaultInputWithLabel
             label={"Номер телефона"}
@@ -164,19 +183,16 @@ const ServicesRequest = ({ vehicleBrands, services }) => {
             inputKeyToErrorList={formValidationErrors}
             touchedInputs={touchedInputs}
             mask={russianPhoneNumberMask}
-            inputAttributeOnChange={emptyFn}
           />
           <DefaultInputWithLabel
             containerAttributeHidden={true}
             inputAttributeName={"phoneNumber"}
             inputAttributeValue={phoneNumber}
-            inputAttributeOnChange={emptyFn}
           />
           <DefaultInputWithLabel
             containerAttributeHidden={true}
             inputAttributeName={"countryCode"}
             inputAttributeValue={countryCode}
-            inputAttributeOnChange={emptyFn}
           />
           <button type="button" ref={submitFormRef} onClick={onHandleSubmit} className="btn-primary">
             Заказать звонок

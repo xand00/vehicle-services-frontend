@@ -3,7 +3,7 @@ import InputMask from "react-input-mask";
 const DefaultInput = ({
   name,
   className = null,
-  value = '',
+  value = null,
   placeholder = null,
   type = 'text',
 
@@ -18,14 +18,12 @@ const DefaultInput = ({
     <InputMask
       name={name}
       className={`default-input ${className ?? ''}`}
-      value={value}
       placeholder={placeholder}
       type={type}
       mask={mask}
+      value={value ?? ''}
 
-      onChange={onChange}
       onInput={onInput}
-      onPaste={onPaste}
     />
   )
 }

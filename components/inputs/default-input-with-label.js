@@ -9,14 +9,13 @@ const DefaultInputWithLabel = ({
   label = null,
   inputAttributeClassName = "",
   inputAttributeValue = '',
-  inputAttributeOnInput = null,
+  inputAttributeOnInput = () => {},
   children,
   containerAttributeHidden = false,
   inputKeyToErrorList = {},
   touchedInputs = [],
   errorFromInputNameList = [],
-  mask = null,
-  inputAttributeOnChange = null
+  mask = null
 }) => {
   const isInvalid = getIsErrorListRendered(inputKeyToErrorList, touchedInputs, inputAttributeName);
   const errorListFromOtherInputs = errorFromInputNameList.filter(inputName => inputKeyToErrorList.hasOwnProperty(inputName)).flatMap(inputName => inputKeyToErrorList[inputName]);
@@ -32,9 +31,8 @@ const DefaultInputWithLabel = ({
           name={inputAttributeName}
           className={(isInvalid ? 'invalid-input ' : '') + inputAttributeClassName }
           value={inputAttributeValue}
-          onInput={inputAttributeOnInput}
-          onChange={inputAttributeOnChange}
           mask={mask}
+          onInput={inputAttributeOnInput}
         />
       )}
       { isInvalid ? errorListFromOtherInputs.concat(inputKeyToErrorList[inputAttributeName]).filter(onlyUnique).map((error) => (
