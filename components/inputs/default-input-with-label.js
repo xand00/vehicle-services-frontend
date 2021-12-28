@@ -1,5 +1,5 @@
-import onlyUnique from "../../utils/arrays/filters/onlyUnique";
-import getIsErrorListRendered from "../../utils/getIsErrorListRendered";
+import onlyUnique from "../../utils/arrays/filters/onlyUnique"
+import getIsErrorListRendered from "../../utils/getIsErrorListRendered"
 import DefaultInput from "./default-input"
 import InputLabel from "./input-label"
 
@@ -8,17 +8,23 @@ const DefaultInputWithLabel = ({
   labelAttributeFor = null,
   label = null,
   inputAttributeClassName = "",
-  inputAttributeValue = '',
+  inputAttributeValue = "",
   inputAttributeOnInput = () => {},
   children,
   containerAttributeHidden = false,
   inputKeyToErrorList = {},
   touchedInputs = [],
   errorFromInputNameList = [],
-  mask = null
+  mask = null,
 }) => {
-  const isInvalid = getIsErrorListRendered(inputKeyToErrorList, touchedInputs, inputAttributeName);
-  const errorListFromOtherInputs = errorFromInputNameList.filter(inputName => inputKeyToErrorList.hasOwnProperty(inputName)).flatMap(inputName => inputKeyToErrorList[inputName]);
+  const isInvalid = getIsErrorListRendered(
+    inputKeyToErrorList,
+    touchedInputs,
+    inputAttributeName
+  )
+  const errorListFromOtherInputs = errorFromInputNameList
+    .filter((inputName) => inputKeyToErrorList.hasOwnProperty(inputName))
+    .flatMap((inputName) => inputKeyToErrorList[inputName])
   return (
     <div hidden={containerAttributeHidden}>
       {label ? (
@@ -29,17 +35,23 @@ const DefaultInputWithLabel = ({
       {children ?? (
         <DefaultInput
           name={inputAttributeName}
-          className={(isInvalid ? 'invalid-input ' : '') + inputAttributeClassName }
+          className={
+            (isInvalid ? "invalid-input " : "") + inputAttributeClassName
+          }
           value={inputAttributeValue}
           mask={mask}
           onInput={inputAttributeOnInput}
         />
       )}
-      { isInvalid ? errorListFromOtherInputs.concat(inputKeyToErrorList[inputAttributeName]).filter(onlyUnique).map((error) => (
-            <span key={error} className="block text-red-500 py-2">
-              {error}
-            </span>
-          ))
+      {isInvalid
+        ? errorListFromOtherInputs
+            .concat(inputKeyToErrorList[inputAttributeName])
+            .filter(onlyUnique)
+            .map((error) => (
+              <span key={error} className="block text-red-500 py-2">
+                {error}
+              </span>
+            ))
         : null}
     </div>
   )

@@ -1,6 +1,10 @@
 import PageTitle from "../../components/page-title"
 import { useRef, useState } from "react"
-import { createServicesRequest, getServices, getVehicleBrands } from "../../utils/api"
+import {
+  createServicesRequest,
+  getServices,
+  getVehicleBrands,
+} from "../../utils/api"
 import parsePhoneNumber from "libphonenumber-js"
 import getInputNameToErrorList from "../../utils/getInputNameToErrorList"
 import {
@@ -26,28 +30,34 @@ export async function getStaticProps() {
 }
 
 function onlyUnique(value, index, self) {
-  return self.indexOf(value) === index;
+  return self.indexOf(value) === index
 }
 
-function setHiddenPhoneInputs(parsedPhoneNumber = null, phoneNumberSetter, countryCodeSetter) {
-  let nationalNumber = '';
-  let countryCallingCode = '';
-  if(parsedPhoneNumber && parsedPhoneNumber.isValid()) {
-    nationalNumber = parsedPhoneNumber.nationalNumber;
-    countryCallingCode = '+' + parsedPhoneNumber.countryCallingCode;
+function setHiddenPhoneInputs(
+  parsedPhoneNumber = null,
+  phoneNumberSetter,
+  countryCodeSetter
+) {
+  let nationalNumber = ""
+  let countryCallingCode = ""
+  if (parsedPhoneNumber && parsedPhoneNumber.isValid()) {
+    nationalNumber = parsedPhoneNumber.nationalNumber
+    countryCallingCode = "+" + parsedPhoneNumber.countryCallingCode
   }
-  phoneNumberSetter(nationalNumber);
-  countryCodeSetter(countryCallingCode);
+  phoneNumberSetter(nationalNumber)
+  countryCodeSetter(countryCallingCode)
 }
 
 // Add rounded-md class to Listbox.Button and Listbox.Options if you want rounded design
 
 const ServicesRequest = ({ vehicleBrands, services }) => {
-  const [addServiceRequest, { data, loading, error }] = useMutation(CREATE_SERVICES_REQUEST);
+  const [addServiceRequest, { data, loading, error }] = useMutation(
+    CREATE_SERVICES_REQUEST
+  )
 
   const formRef = useRef()
   const submitFormRef = useRef()
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const [fullPhoneNumber, setFullPhoneNumber] = useState(() => "")
   const [phoneNumber, setPhoneNumber] = useState(() => "")
@@ -55,16 +65,25 @@ const ServicesRequest = ({ vehicleBrands, services }) => {
   const [firstName, setFirstName] = useState(() => "")
   const [lastName, setLastName] = useState(() => "")
 
-  const handleFullPhoneNumberInput = e => {
+  const handleFullPhoneNumberInput = (e) => {
     setFullPhoneNumber(e.target.value)
     setTimeout(() => {
-      const value = e.target.value.replace(/\D+/g, '');
-      setHiddenPhoneInputs(parsePhoneNumber(value, "RU"), setPhoneNumber, setCountryCode)
+      const value = e.target.value.replace(/\D+/g, "")
+      setHiddenPhoneInputs(
+        parsePhoneNumber(value, "RU"),
+        setPhoneNumber,
+        setCountryCode
+      )
     })
   }
 
   const [touchedInputs, setTouchedInputs] = useState(() => [])
-  const mergeWithPreviousTouchedInputs = value => setTouchedInputs(previousValue => [...previousValue, ...(Array.isArray(value) ? value : [value])].filter(onlyUnique))
+  const mergeWithPreviousTouchedInputs = (value) =>
+    setTouchedInputs((previousValue) =>
+      [...previousValue, ...(Array.isArray(value) ? value : [value])].filter(
+        onlyUnique
+      )
+    )
 
   const [formValidationErrors, setFormValidationErrors] = useState(() => {})
 
@@ -76,41 +95,42 @@ const ServicesRequest = ({ vehicleBrands, services }) => {
       services: nonEmptyMultiInputConstraint,
       // vehicle_brand: nonEmptyInputConstraint,
       // vehicle_model: nonEmptyInputConstraint,
-      countryCode: russianCountryCodeConstraint
+      countryCode: russianCountryCodeConstraint,
     }
 
-    const formObject = formToObject(formRef.current, ['services']);
-    const formValidationObject = getInputNameToErrorList(formObject, constraints) ?? {}
-    const invalidInputNameList = Object.keys(formValidationObject);
-    if(isSubmit) {
-      mergeWithPreviousTouchedInputs(invalidInputNameList);
+    const formObject = formToObject(formRef.current, ["services"])
+    const formValidationObject =
+      getInputNameToErrorList(formObject, constraints) ?? {}
+    const invalidInputNameList = Object.keys(formValidationObject)
+    if (isSubmit) {
+      mergeWithPreviousTouchedInputs(invalidInputNameList)
     }
     setFormValidationErrors(formValidationObject)
-    return { formObject, isValid: invalidInputNameList.length === 0 };
+    return { formObject, isValid: invalidInputNameList.length === 0 }
   }
 
-  const onChangeForm = e => {
-    const target = e.target;
-    if(target) {
-      const targetName = target.getAttribute('name');
-      mergeWithPreviousTouchedInputs(targetName);
+  const onChangeForm = (e) => {
+    const target = e.target
+    if (target) {
+      const targetName = target.getAttribute("name")
+      mergeWithPreviousTouchedInputs(targetName)
     }
-    validateForm();
+    validateForm()
   }
 
-  const onHandleSubmit = async e => {
-    const { formObject, isValid } = validateForm(true);
-    if(!isValid) return;
-    delete formObject.fullPhoneNumber;
-    if(formObject.vehicle_brand === '') formObject.vehicle_brand = null;
-    if(formObject.vehicle_model === '') formObject.vehicle_model = null;
+  const onHandleSubmit = async (e) => {
+    const { formObject, isValid } = validateForm(true)
+    if (!isValid) return
+    delete formObject.fullPhoneNumber
+    if (formObject.vehicle_brand === "") formObject.vehicle_brand = null
+    if (formObject.vehicle_model === "") formObject.vehicle_model = null
     console.log(formObject)
     await addServiceRequest({ variables: formObject })
-    setFirstName('');
-    setLastName('');
-    setFullPhoneNumber('');
-    formRef.current.reset();
-    dispatch(openModal('thank-you-for-request'));
+    setFirstName("")
+    setLastName("")
+    setFullPhoneNumber("")
+    formRef.current.reset()
+    dispatch(openModal("thank-you-for-request"))
   }
 
   return (
@@ -123,9 +143,9 @@ const ServicesRequest = ({ vehicleBrands, services }) => {
           onChange={onChangeForm}
           className="w-1/3 grid gap-5"
         >
-          <DefaultInputWithLabel 
+          <DefaultInputWithLabel
             label={"Услуги"}
-            inputAttributeName={'services'}
+            inputAttributeName={"services"}
             touchedInputs={touchedInputs}
             inputKeyToErrorList={formValidationErrors}
           >
@@ -150,7 +170,7 @@ const ServicesRequest = ({ vehicleBrands, services }) => {
               })}
             </div>
           </DefaultInputWithLabel>
-          <VehicleItemInput 
+          <VehicleItemInput
             vehicleBrands={vehicleBrands}
             inputKeyToErrorList={formValidationErrors}
             touchedInputs={touchedInputs}
@@ -162,7 +182,7 @@ const ServicesRequest = ({ vehicleBrands, services }) => {
             inputKeyToErrorList={formValidationErrors}
             touchedInputs={touchedInputs}
             inputAttributeValue={firstName}
-            inputAttributeOnInput={e => setFirstName(e.target.value)}
+            inputAttributeOnInput={(e) => setFirstName(e.target.value)}
           />
           <DefaultInputWithLabel
             label={"Фамилия"}
@@ -171,12 +191,12 @@ const ServicesRequest = ({ vehicleBrands, services }) => {
             inputKeyToErrorList={formValidationErrors}
             touchedInputs={touchedInputs}
             inputAttributeValue={lastName}
-            inputAttributeOnInput={e => setLastName(e.target.value)}
+            inputAttributeOnInput={(e) => setLastName(e.target.value)}
           />
           <DefaultInputWithLabel
             label={"Номер телефона"}
             inputAttributeName={"fullPhoneNumber"}
-            errorFromInputNameList={['phoneNumber', 'countryCode']}
+            errorFromInputNameList={["phoneNumber", "countryCode"]}
             inputAttributeClassName={"w-1/2"}
             inputAttributeValue={fullPhoneNumber}
             inputAttributeOnInput={handleFullPhoneNumberInput}
@@ -194,7 +214,12 @@ const ServicesRequest = ({ vehicleBrands, services }) => {
             inputAttributeName={"countryCode"}
             inputAttributeValue={countryCode}
           />
-          <button type="button" ref={submitFormRef} onClick={onHandleSubmit} className="btn-primary">
+          <button
+            type="button"
+            ref={submitFormRef}
+            onClick={onHandleSubmit}
+            className="btn-primary"
+          >
             Заказать звонок
           </button>
         </form>

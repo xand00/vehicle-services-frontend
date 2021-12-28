@@ -7,15 +7,15 @@ const FeedbackForm = () => {
     <div className="grid grid-row-auto gap-5 w-full">
       <h4>Обратная связь</h4>
       <DefaultInput
-        placeholder={'Имя'}
-        name={'name'}
-        className={'xl:w-1/2'}
+        placeholder={"Имя"}
+        name={"name"}
+        className={"xl:w-1/2"}
         mask
       />
       <DefaultInput
-        placeholder={'Номер телефона'}
-        name={'fullPhoneNumber'}
-        className={'xl:w-1/2'}
+        placeholder={"Номер телефона"}
+        name={"fullPhoneNumber"}
+        className={"xl:w-1/2"}
         mask={russianPhoneNumberMask}
       />
       <DefaultTextarea
