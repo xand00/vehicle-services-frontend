@@ -103,6 +103,20 @@ export const GET_VEHICLE_BRANDS = `
   }
 `
 
+export const GET_CONTACT = `
+  query Contact {
+    contact {
+      data {
+        id,
+        attributes {
+          fullPhoneNumber,
+          email
+        }
+      }
+    }
+  }
+`
+
 export const CREATE_SERVICES_REQUEST = gql`
 mutation CreateServicesRequest(
   $services: [ID!],

@@ -8,8 +8,9 @@ import { Provider } from "react-redux"
 import { ApolloProvider } from "@apollo/client"
 import { getApolloClient } from "../lib/apollo-client"
 import Logo from "../components/logo"
+import { getContact } from "../utils/api"
 
-const MyApp = ({ Component, pageProps }) => {
+const MyApp = ({ Component, pageProps, contact }) => {
   if (!pageProps) {
     return (
       <div className="flex-center h-screen">
@@ -17,6 +18,7 @@ const MyApp = ({ Component, pageProps }) => {
       </div>
     )
   }
+  console.log(contact)
   const apolloClient = getApolloClient()
   return (
     <Provider store={store}>

@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { getApolloClient } from "../lib/apollo-client";
-import { CREATE_SERVICES_REQUEST, GET_SERVICE, GET_SERVICES, GET_SERVICES_PROMOTION, GET_TESTIMONIALS, GET_VEHICLE_BRANDS } from "./graphqlQueries";
+import { CREATE_SERVICES_REQUEST, GET_CONTACT, GET_SERVICE, GET_SERVICES, GET_SERVICES_PROMOTION, GET_TESTIMONIALS, GET_VEHICLE_BRANDS } from "./graphqlQueries";
 import normalizeResponseFromStrapi from "./normalizeResponseFromStrapi";
 
 export function getStrapiURL(path) {
@@ -68,6 +68,10 @@ export async function getTestimonials() {
 
 export async function getVehicleBrands() {
   return normalizeResponseFromStrapi(await query(GET_VEHICLE_BRANDS)).data.vehicleBrands;
+}
+
+export async function getContact() {
+  return normalizeResponseFromStrapi(await query(GET_CONTACT)).data.contact;
 }
 
 export async function createServicesRequest(data) {
