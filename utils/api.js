@@ -5,7 +5,7 @@ import normalizeResponseFromStrapi from "./normalizeResponseFromStrapi";
 
 export function getStrapiURL(path) {
   return `${
-    process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337/api"
+    process.env.NEXT_PUBLIC_STRAPI_BACKEND + '/api' || "http://localhost:1337/api"
   }${path}`;
 }
 
