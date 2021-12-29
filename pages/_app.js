@@ -10,14 +10,14 @@ import { getApolloClient } from "../lib/apollo-client"
 import Logo from "../components/logo"
 
 const MyApp = ({ Component, pageProps }) => {
-  if(!pageProps) {
+  if (!pageProps) {
     return (
       <div className="flex-center h-screen">
         <Logo svgClasses="h-24" />
       </div>
-    );
+    )
   }
-  const apolloClient = getApolloClient();
+  const apolloClient = getApolloClient()
   return (
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
@@ -43,7 +43,7 @@ const MyApp = ({ Component, pageProps }) => {
 //
 MyApp.getInitialProps = async (appContext) => {
   // calls page's `getInitialProps` and fills `appProps.pageProps`
-  const appProps = await App.getInitialProps(appContext);
+  const appProps = await App.getInitialProps(appContext)
 
   return { ...appProps }
 }
