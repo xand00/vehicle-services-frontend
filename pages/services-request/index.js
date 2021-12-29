@@ -118,7 +118,6 @@ const ServicesRequest = ({ vehicleBrands, services }) => {
     delete formObject.fullPhoneNumber
     if (formObject.vehicle_brand === "") formObject.vehicle_brand = null
     if (formObject.vehicle_model === "") formObject.vehicle_model = null
-    console.log(formObject)
     await addServiceRequest({ variables: formObject })
     setFirstName("")
     setLastName("")

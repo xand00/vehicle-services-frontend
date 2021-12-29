@@ -7,9 +7,17 @@ import { store } from "../app/store"
 import { Provider } from "react-redux"
 import { ApolloProvider } from "@apollo/client"
 import { getApolloClient } from "../lib/apollo-client"
+import Logo from "../components/logo"
 
 const MyApp = ({ Component, pageProps }) => {
-  const apolloClient = getApolloClient()
+  if(!pageProps) {
+    return (
+      <div className="flex-center h-screen">
+        <Logo svgClasses="h-24" />
+      </div>
+    );
+  }
+  const apolloClient = getApolloClient();
   return (
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
@@ -28,17 +36,16 @@ const MyApp = ({ Component, pageProps }) => {
   )
 }
 
-// getInitialProps disables automatic static optimization for pages that don't
-// have getStaticProps. So [[...slug]] pages still get SSG.
-// Hopefully we can replace this with getStaticProps once this issue is fixed:
-// https://github.com/vercel/next.js/discussions/10949
-MyApp.getInitialProps = async (ctx) => {
-  // Calls page's `getInitialProps` and fills `appProps.pageProps`
-  const appProps = await App.getInitialProps(ctx)
-  // Fetch global site settings from Strapi
-  const categories = []
-  // Pass the data to our page via props
-  return { ...appProps, pageProps: { categories, path: ctx.pathname } }
+// Only uncomment this method if you have blocking data requirements for
+// every single page in your application. This disables the ability to
+// perform automatic static optimization, causing every page in your app to
+// be server-side rendered.
+//
+MyApp.getInitialProps = async (appContext) => {
+  // calls page's `getInitialProps` and fills `appProps.pageProps`
+  const appProps = await App.getInitialProps(appContext);
+
+  return { ...appProps }
 }
 
 export default MyApp

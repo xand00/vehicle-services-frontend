@@ -6,7 +6,6 @@ import { getStrapiMedia } from "../../utils/medias"
 
 const ServicePage = ({ service }) => {
   const router = useRouter()
-  console.log(service)
   if (router.isFallback) {
     return <div>Loading product...</div>
   }

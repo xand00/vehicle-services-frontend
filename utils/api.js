@@ -37,7 +37,7 @@ async function query(string, payload = null) {
     query: gql(string)
   };
   if(payload) queryObject.variables = payload;
-  const apolloClient = getApolloClient(true);
+  const apolloClient = getApolloClient();
   return await apolloClient.query(queryObject)
 }
 
@@ -50,6 +50,7 @@ async function mutate(string, payload = null) {
 }
 
 export async function getServicesPromotion() {
+  // console.log((await query(GET_SERVICES_PROMOTION)).data.servicesPromotion.data.attributes.preview_image)
   return normalizeResponseFromStrapi(await query(GET_SERVICES_PROMOTION)).data.servicesPromotion;
 }
 
@@ -70,6 +71,5 @@ export async function getVehicleBrands() {
 }
 
 export async function createServicesRequest(data) {
-  console.log(CREATE_SERVICES_REQUEST(JSON.stringify(data).replace(/"([^"]+)":/g, '$1:')))
   return normalizeResponseFromStrapi(await mutate(CREATE_SERVICES_REQUEST(JSON.stringify(data).replace(/"([^"]+)":/g, '$1:'))));
 }
