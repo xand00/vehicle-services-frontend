@@ -134,7 +134,7 @@ const ServicesRequest = ({ vehicleBrands, services }) => {
         <form
           ref={formRef}
           onChange={onChangeForm}
-          className="w-1/3 grid gap-5"
+          className="xl:w-1/3 grid gap-5"
         >
           <DefaultInputWithLabel
             label={"Услуги"}
@@ -171,7 +171,7 @@ const ServicesRequest = ({ vehicleBrands, services }) => {
           <DefaultInputWithLabel
             label={"Имя"}
             inputAttributeName={"firstName"}
-            inputAttributeClassName={"w-1/2"}
+            inputAttributeClassName={"w-full xl:w-1/2"}
             inputKeyToErrorList={formValidationErrors}
             touchedInputs={touchedInputs}
             inputAttributeValue={firstName}
@@ -180,7 +180,7 @@ const ServicesRequest = ({ vehicleBrands, services }) => {
           <DefaultInputWithLabel
             label={"Фамилия"}
             inputAttributeName={"lastName"}
-            inputAttributeClassName={"w-1/2"}
+            inputAttributeClassName={"w-full xl:w-1/2"}
             inputKeyToErrorList={formValidationErrors}
             touchedInputs={touchedInputs}
             inputAttributeValue={lastName}
@@ -190,7 +190,7 @@ const ServicesRequest = ({ vehicleBrands, services }) => {
             label={"Номер телефона"}
             inputAttributeName={"fullPhoneNumber"}
             errorFromInputNameList={["phoneNumber", "countryCode"]}
-            inputAttributeClassName={"w-1/2"}
+            inputAttributeClassName={"w-full xl:w-1/2"}
             inputAttributeValue={fullPhoneNumber}
             inputAttributeOnInput={handleFullPhoneNumberInput}
             inputKeyToErrorList={formValidationErrors}

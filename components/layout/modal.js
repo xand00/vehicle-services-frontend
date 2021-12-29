@@ -15,11 +15,11 @@ const Modal = ({ id, children }) => {
       } fixed z-20 pt-16 top-0 left-0 w-full h-full overflow-auto bg-black bg-opacity-75 grid place-items-center`}
       onClick={closeThisModal}
     >
-      <div className="relative bg-opacity-100">
+      <div className="relative bg-opacity-100 md:w-max w-2/3">
         <div className="absolute right-7 top-5 z-30" onClick={closeThisModal}>
           <Cross></Cross>
         </div>
-        <div className="py-12 px-24 bg-white" onClick={stopPropagation}>
+        <div className="py-12 md:px-24 px-4 bg-white" onClick={stopPropagation}>
           {children}
         </div>
       </div>
