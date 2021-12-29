@@ -27,10 +27,10 @@ const HomePage = ({ testimonialList, servicesPromotion }) => {
   )
 }
 
+export default HomePage
+
 export async function getServerSideProps() {
   const testimonialList = await getTestimonials()
   const servicesPromotion = await getServicesPromotion()
   return { props: { testimonialList, servicesPromotion } }
 }
-
-export default HomePage
