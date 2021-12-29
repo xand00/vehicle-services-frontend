@@ -9,7 +9,7 @@ import { ApolloProvider } from "@apollo/client"
 import getApolloClient from "../lib/apollo-client"
 
 const MyApp = ({ Component, pageProps }) => {
-  const apolloClient = getApolloClient();
+  const apolloClient = getApolloClient()
   return (
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
