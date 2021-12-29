@@ -11,6 +11,13 @@ FROM node:lts-alpine3.12 AS builder
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
+
+ARG NEXT_PUBLIC_STRAPI_API_URL
+ENV NEXT_PUBLIC_STRAPI_API_URL=$NEXT_PUBLIC_STRAPI_API_URL
+
+ARG NEXT_PUBLIC_STRAPI_API_URL_MEDIA
+ENV NEXT_PUBLIC_STRAPI_API_URL_MEDIA=$NEXT_PUBLIC_STRAPI_API_URL_MEDIA
+
 RUN yarn build && yarn install --production --ignore-scripts --prefer-offline
 
 # Production image, copy all the files and run next
