@@ -17,7 +17,7 @@ const Services = ({ services }) => {
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const services = await getServices()
   return { props: { services } }
 }

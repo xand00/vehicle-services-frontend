@@ -27,7 +27,7 @@ const HomePage = ({ testimonialList, servicesPromotion }) => {
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const testimonialList = await getTestimonials()
   const servicesPromotion = await getServicesPromotion()
   return { props: { testimonialList, servicesPromotion } }

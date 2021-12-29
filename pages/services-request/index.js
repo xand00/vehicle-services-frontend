@@ -23,7 +23,7 @@ import russianPhoneNumberMask from "../../utils/russianPhoneNumberMask"
 import { useMutation } from "@apollo/client"
 import { CREATE_SERVICES_REQUEST } from "../../utils/graphqlQueries"
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const vehicleBrands = await getVehicleBrands()
   const services = await getServices()
   return { props: { vehicleBrands, services } }
