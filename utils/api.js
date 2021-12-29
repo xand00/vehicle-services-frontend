@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import apolloClient from "../lib/apollo-client";
+import { getApolloClient } from "../lib/apollo-client";
 import { CREATE_SERVICES_REQUEST, GET_SERVICE, GET_SERVICES, GET_SERVICES_PROMOTION, GET_TESTIMONIALS, GET_VEHICLE_BRANDS } from "./graphqlQueries";
 import normalizeResponseFromStrapi from "./normalizeResponseFromStrapi";
 
@@ -37,6 +37,7 @@ async function query(string, payload = null) {
     query: gql(string)
   };
   if(payload) queryObject.variables = payload;
+  const apolloClient = getApolloClient(true);
   return await apolloClient.query(queryObject)
 }
 
