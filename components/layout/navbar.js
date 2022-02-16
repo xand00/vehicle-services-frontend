@@ -1,6 +1,8 @@
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useState } from "react"
+import Email from "../contact-info/email"
+import PhoneNumber from "../contact-info/phone-number"
 import Logo from "../logo"
 
 const Navbar = () => {
@@ -22,9 +24,15 @@ const Navbar = () => {
   }
   return (
     <div className="bg-white border-b-2 border-gray-500 sticky top-0 z-10">
-      <div className="lg:container lg:mx-auto grid grid-cols-2 grid my-2 mx-8">
-        <Logo wrapperClasses="h-12 self-center" svgClasses="h-full"></Logo>
-        <div className="lg:hidden place-self-end">
+      <div className="lg:container lg:mx-auto grid lg:grid-cols-4 justify-items-center lg:justify-items-none my-2 mx-8">
+        <Logo wrapperClasses="h-12 self-center" svgClasses="h-12"></Logo>
+		<span className="lg:place-self-end self-center lg:pr-5">
+			<Email color="black" />
+	    </span>
+		<span className="lg:place-self-start my-auto self-center lg:pl-5">
+			<PhoneNumber color="black" />
+		</span>
+        <div className="lg:hidden lg:place-self-end">
           <span
             onClick={toggleMobileMenuActive}
             className={`navbar-link ${isMobileMenuActive ? "active" : ""}`}
@@ -35,7 +43,7 @@ const Navbar = () => {
         <div
           className={`${
             isMobileMenuActive ? "" : "hidden"
-          } lg:place-self-end lg:flex col-span-2 lg:col-auto`}
+          } lg:place-self-end lg:flex col-auto`}
         >
           {links.map((link) => {
             const includes = asPath === link.path
