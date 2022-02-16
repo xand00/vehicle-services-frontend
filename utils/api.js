@@ -5,7 +5,7 @@ import normalizeResponseFromStrapi from "./normalizeResponseFromStrapi";
 
 export function getStrapiURL(path) {
   return `${
-    process.env.NEXT_PUBLIC_STRAPI_BACKEND + '/api' || "http://localhost:1337/api"
+    process.env.BACKEND_URL + '/api'
   }${path}`;
 }
 
@@ -74,6 +74,6 @@ export async function getContact() {
   return normalizeResponseFromStrapi(await query(GET_CONTACT)).data.contact;
 }
 
-export async function createServicesRequest(data) {
+export async function createSelrvicesRequest(data) {
   return normalizeResponseFromStrapi(await mutate(CREATE_SERVICES_REQUEST(JSON.stringify(data).replace(/"([^"]+)":/g, '$1:'))));
 }
