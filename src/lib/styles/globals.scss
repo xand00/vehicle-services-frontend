@@ -1,0 +1,150 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+    /* Box sizing rules */
+    *,
+    *::before,
+    *::after {
+    box-sizing: border-box;
+    }
+
+    /* Remove default margin */
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    p,
+    figure,
+    blockquote,
+    dl,
+    dd {
+    margin: 0;
+    }
+
+    /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+    ul[role='list'],
+    ol[role='list'] {
+    list-style: none;
+    }
+
+    /* Set core root defaults */
+    html:focus-within {
+    scroll-behavior: smooth;
+    }
+
+    /* Set core body defaults */
+    body {
+    min-height: 100vh;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+    }
+
+    /* A elements that don't have a class get default styles */
+    a:not([class]) {
+    text-decoration-skip-ink: auto;
+    }
+
+    /* Make images easier to work with */
+    img,
+    picture {
+    max-width: 100%;
+    display: block;
+    }
+
+    /* Inherit fonts for inputs and buttons */
+    input,
+    button,
+    textarea,
+    select {
+    font: inherit;
+    }
+
+    /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+    @media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+    scroll-behavior: auto;
+    }
+    
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    }
+
+
+    html {
+        overflow: -moz-scrollbars-vertical; 
+        overflow-y: scroll;
+    }
+
+    .full-card {
+        @apply grid lg:grid-flow-col;
+    }
+
+    .full-card-left {
+        @apply grid;
+        grid-template-rows: 1fr 1fr 5fr 1fr;
+    }
+
+    .aspect-ratio-1 {
+        aspect-ratio: 1;
+    }
+
+    .default-input {
+        @apply text-black p-1 focus:border-green-500 border-2 outline-none;
+    }
+
+    .invalid-input {
+        @apply border-red-500 #{!important};
+    }
+}
+
+@layer components {
+    .flex-center {
+        @apply flex flex-col justify-center items-center;
+    }
+
+    .navbar-link {
+        @apply h-10 my-2 lg:my-0 lg:ml-2 px-7  md:px-10 text-center flex-center bg-gray-300;
+        
+        &.active {
+            @apply text-white bg-gray-800;
+        }
+    }
+
+    .link {
+        @apply hover:text-blue-500;
+    }
+
+    .bg-tertiary {
+        @apply bg-blue-500;
+    }
+
+    .border-tertiary {
+        @apply border-blue-500;
+    }
+
+    .ring-tertiary {
+        @apply ring-blue-500;
+    }
+
+    .text-tertiary {
+        @apply text-blue-500;
+    }
+
+    .btn-primary {
+        @apply bg-gray-700 text-white py-2 text-xl px-4
+    }
+
+    .display-error-after-from-data-error[data-error]::after {
+        @apply text-red-500 block content-[attr(data-error)] absolute;
+    }
+}
+

@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:xand00/vehicle-services-frontend.git
+	branch = main
+	commit = eb7f645ee2c236fc2bad00ef1c1ac3f4a4b828c1
+	parent = c4424e7ea2e4240682710e4abde1815ec806f554
+	method = merge
+	cmdver = 0.4.3

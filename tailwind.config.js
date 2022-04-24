@@ -4,7 +4,9 @@ module.exports = {
   plugins: [
     require('@tailwindcss/aspect-ratio')
   ],
-  purge: ["./components/**/*.js", "./pages/**/*.js"],
+  content: [
+    './src/**/*.{js,jsx,ts,tsx}'
+  ],
   theme: {
     extend: {
       colors: {
