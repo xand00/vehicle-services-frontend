@@ -6,7 +6,6 @@ import isEqual from 'lodash/isEqual'
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
-const isServer = typeof window === "undefined"
 type ApolloClientType = null | undefined | ApolloClient<JSON> | ApolloClient<NormalizedCacheObject>
 let apolloClient: ApolloClientType
 
@@ -28,7 +27,7 @@ function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
     link: new HttpLink({
-      uri: (isServer ? process.env.BACKEND_URL : process.env.NEXT_PUBLIC_BACKEND_URL) + '/graphql', // Server URL (must be absolute)
+      uri: process.env.NEXT_PUBLIC_BACKEND_URL + '/graphql', // Server URL (must be absolute)
       credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
     }),
     cache: new InMemoryCache({
