@@ -1,0 +1,29 @@
+image: docker:20
+
+stages:
+  - build
+  - deploy
+
+before_script:
+  - echo -n $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+
+build:
+  stage: build
+  tags:
+    - gitlab-docker
+  script:
+    - docker build
+      --build-arg NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL
+      --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+      .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+
+deploy:
+  stage: deploy
+  tags:
+    - vehicle-services-prod-shell
+  script:
+    - docker container rm $CI_REGISTRY_IMAGE:latest -f
+    - docker pull $CI_REGISTRY/$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker tag $CI_REGISTRY/$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:latest
+    - docker run -p 3000:3000 $CI_REGISTRY_IMAGE:latest
