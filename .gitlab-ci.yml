@@ -1,19 +1,20 @@
-# image: docker:20.10.14-alpine3.15
+image: docker:20.10.14-alpine3.15
 
 stages:
   - build
   - deploy
 
-# services:
-#  - docker:20.10.14-dind-alpine3.15
+services:
+ - docker:20.10.14-dind-alpine3.15
 
-before_script:
-  - echo -n $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+
 
 build:
   stage: build
   tags:
     - gitlab-docker
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - docker build
       --build-arg NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL
@@ -25,6 +26,8 @@ deploy:
   stage: deploy
   tags:
     - vehicle-services-prod-shell
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - docker container rm $CI_REGISTRY_IMAGE:latest -f
     - docker pull $CI_REGISTRY/$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
