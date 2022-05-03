@@ -1,11 +1,11 @@
-image: docker:20
+image: docker:20.10.14-alpine3.15
 
 stages:
   - build
   - deploy
 
 services:
- - docker:dind
+ - docker:20.10.14-dind-alpine3.15
 
 before_script:
   - echo -n $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
