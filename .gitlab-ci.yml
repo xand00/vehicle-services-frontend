@@ -10,6 +10,9 @@ services:
 before_script:
   - echo -n $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
 
+variables:
+  GET_SOURCES_ATTEMPTS: "25"
+
 build:
   stage: build
   tags:
