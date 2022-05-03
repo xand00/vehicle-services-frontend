@@ -11,7 +11,7 @@ before_script:
   - echo -n $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
 
 variables:
-  GIT_STRATEGY: clone
+  DOCKER_TLS_CERTDIR: "/certs"
 
 build:
   stage: build
