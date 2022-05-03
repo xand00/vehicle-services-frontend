@@ -7,8 +7,6 @@ stages:
 services:
  - docker:20.10.14-dind-alpine3.15
 
-
-
 build:
   stage: build
   tags:
