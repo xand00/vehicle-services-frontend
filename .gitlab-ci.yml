@@ -7,6 +7,8 @@ stages:
 services:
  - docker:20.10.14-dind-alpine3.15
 
+variables:
+
 build:
   stage: build
   tags:
@@ -27,10 +29,10 @@ deploy:
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - docker container rm $CI_PROJECT_NAME:latest -f
+    - docker container rm $CI_PROJECT_ID:latest -f
     - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_PROJECT_NAME:latest
-    - docker run --name $CI_PROJECT_NAME:latest -d -p 80:3000 $CI_PROJECT_NAME:latest
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_PROJECT_ID:latest
+    - docker run --name $CI_PROJECT_ID:latest  -d -p 80:3000 $CI_PROJECT_ID:latest
   rules:
     - when: manual
 
