@@ -10,8 +10,6 @@ variables:
 services:
  - docker:20.10.14-dind-alpine3.15
 
-variables:
-
 build:
   stage: build
   tags:
