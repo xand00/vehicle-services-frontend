@@ -28,6 +28,7 @@ deploy:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - docker container rm $CI_PROJECT_NAME -f
+    - docker rmi $(docker images -q $CI_PROJECT_NAME) -f
     - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
     - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_PROJECT_NAME
     - docker run --name $CI_PROJECT_NAME -d -p 80:3000 $CI_PROJECT_NAME
