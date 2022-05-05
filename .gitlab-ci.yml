@@ -30,7 +30,7 @@ deploy:
     - docker container rm $CI_REGISTRY_IMAGE:latest -f
     - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
     - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:latest
-    - docker run -p 3000:3000 $CI_REGISTRY_IMAGE:latest
+    - docker run -d -p 80:3000 $CI_REGISTRY_IMAGE:latest
   rules:
     - when: manual
 
