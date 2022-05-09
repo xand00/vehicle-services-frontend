@@ -4,6 +4,7 @@ import React, { useState } from "react"
 import Email from "@/components/contact-info/email"
 import PhoneNumber from "@/components/contact-info/phone-number"
 import Logo from "@/components/logo"
+import Location from "../contact-info/location"
 
 const Navbar: React.FC = () => {
   const { asPath } = useRouter()
@@ -24,27 +25,45 @@ const Navbar: React.FC = () => {
   }
   return (
     <div className="bg-white border-b-2 border-gray-500 sticky top-0 z-10">
-      <div className="lg:container lg:mx-auto grid lg:grid-cols-4 justify-items-center lg:justify-items-none my-2 mx-8">
-        <Logo wrapperClasses="h-12 self-center" svgClasses="h-12"></Logo>
-		<span className="lg:place-self-end self-center lg:pr-5">
-			<Email color="black" />
-	    </span>
-		<span className="lg:place-self-start my-auto self-center lg:pl-5">
-			<PhoneNumber color="black" />
-		</span>
-        <div className="lg:hidden lg:place-self-end">
-          <span
+      <div className="xl:container xl:mx-auto grid grid-cols-2 gap-2 xl:grid-cols-5 xl:justify-items-none my-3 mx-3">
+        <div>
+          <Link href="/">
+            <a className="flex items-center max-w-max">
+              <Logo wrapperClasses="h-12" svgClasses="h-12"></Logo>
+              <span className="font-medium text-2xl ml-3 items"></span>
+            </a>
+          </Link>
+        </div>
+        <div className="xl:hidden place-self-end my-auto">
+          <svg onClick={toggleMobileMenuActive} xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+            <path strokeLinecap="round" strokeLinejoin="round" d={isMobileMenuActive ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
+          </svg>
+          
+          {/* <span
             onClick={toggleMobileMenuActive}
             className={`navbar-link ${isMobileMenuActive ? "active" : ""}`}
           >
             Меню
-          </span>
+          </span> */}
         </div>
+        <span className="my-auto xl:pl-5 col-span-3 xl:col-auto md:mx-auto">
+          <PhoneNumber />
+        </span>
+        <span className="my-auto xl:pl-5 col-span-3 xl:col-auto md:mx-auto">
+          <Location />
+        </span>
+
+        <span className={`my-auto xl:pl-5 col-span-3 xl:col-auto xl:block md:mx-auto ${isMobileMenuActive ? "" : "hidden"}`}>
+          <Email />
+        </span>
+        
         <div
           className={`${
             isMobileMenuActive ? "" : "hidden"
-          } lg:place-self-end lg:flex col-auto`}
+          } xl:place-self-end xl:flex col-span-3 xl:col-auto`}
         >
+          
+
           {links.map((link) => {
             const includes = asPath === link.path
             const className = `navbar-link ${includes ? "active" : ""}`

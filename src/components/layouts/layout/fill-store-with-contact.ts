@@ -6,6 +6,7 @@ import { parsePhoneNumber } from "libphonenumber-js"
 export default async (dispatch: AppDispatch) => {
   try {
     const contact = await getContact()
+    console.log(contact)
     const parsedPhoneNumber = parsePhoneNumber(
       contact.fullPhoneNumber.replace(/\D/g, ""),
       "RU"

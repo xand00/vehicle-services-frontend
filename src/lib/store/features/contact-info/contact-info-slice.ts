@@ -10,6 +10,7 @@ const initialState = {
   contactInfo: {
     email: null,
     fullPhoneNumber: null,
+    address: null
   },
   fullPhoneNumberForLink: '',
 } as ContactInfoState

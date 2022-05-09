@@ -4,15 +4,15 @@ import { ColorProp } from "@/types/props"
 import React from "react"
 
 type EmailProps = {
-	color: ColorProp
+	color?: ColorProp
 }
 
-const Email: React.FC<EmailProps> = ({ color }) => {
+const Email: React.FC<EmailProps> = ({ color = 'black' }) => {
 	const contactInfo = useAppSelector(state => state.contactInfo.contactInfo)
 	return (
 		<a href={"mailto:" + contactInfo.email} className="block link">
 			<svg
-				className={"fill-current text-" + color + " h-10 w-10 inline-block p-1"}
+				className={"fill-current text-" + color + " h-6 w-6 inline-block p-1"}
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 204.839 204.839"
 			>

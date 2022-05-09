@@ -3,6 +3,7 @@ import Sitemap from "@/components/sitemap"
 import PhoneNumber from "@/components/contact-info/phone-number"
 import Email from "@/components/contact-info/email"
 import React from "react"
+import Location from "../contact-info/location"
 
 const Footer: React.FC = () => {
   return (
@@ -19,8 +20,9 @@ const Footer: React.FC = () => {
           <Logo svgClasses="h-24 fill-current text-white"></Logo>
           <div className="my-5">
             <div>
-			  <PhoneNumber color="white" />
-			  <Email color="white" />
+              <PhoneNumber color="white" />
+              <Location color="white" />
+              <Email color="white" />
             </div>
           </div>
         </div>

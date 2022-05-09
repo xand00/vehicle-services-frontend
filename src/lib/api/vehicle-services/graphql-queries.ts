@@ -115,7 +115,8 @@ export const GET_CONTACT = `
         id,
         attributes {
           fullPhoneNumber,
-          email
+          email,
+          address
         }
       }
     }

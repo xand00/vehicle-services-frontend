@@ -3,17 +3,17 @@ import { ColorProp } from "@/types/props"
 import React from "react"
 
 type PhoneNumberProps = {
-	color: ColorProp
+	color?: ColorProp
 }
 
-const PhoneNumber: React.FC<PhoneNumberProps> = ({ color }) => {
+const PhoneNumber: React.FC<PhoneNumberProps> = ({ color = 'black' }) => {
 	const contactInfo = useAppSelector(state => state.contactInfo.contactInfo)
 	const fullPhoneNumberForLink = useAppSelector(state => state.contactInfo.fullPhoneNumberForLink)
 
 	return (
 		<a href={"tel:" + fullPhoneNumberForLink} className="block link">
 			<svg
-				className={"fill-current text-" + color + " h-10 w-10 inline-block"}
+				className={"fill-current text-" + color + " h-6 w-6 inline-block"}
 				viewBox="0 0 30 30"
 				xmlns="http://www.w3.org/2000/svg"
 			>
