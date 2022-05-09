@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { initializeApollo } from "./apollo-client";
 import { DocumentNode } from "graphql";
-import { GET_CONTACT, GET_SERVICE, GET_SERVICES, GET_SERVICES_PROMOTION, GET_TESTIMONIALS, GET_VEHICLE_BRANDS, GET_VEHICLE_MODELS } from "./graphql-queries";
+import { GET_CONTACT, GET_SERVICE, GET_SERVICES, GET_SERVICES_PROMOTION, GET_SITE_INFO, GET_TESTIMONIALS, GET_VEHICLE_BRANDS, GET_VEHICLE_MODELS } from "./graphql-queries";
 import normalizeResponseFromStrapi from "./normalize-response-from-strapi";
 import { IDProp } from "@/types/props";
 
@@ -74,4 +74,8 @@ export async function getVehicleModels(payload: getVehicleModelsPayload) {
 
 export async function getContact() {
   return normalizeResponseFromStrapi(await query(GET_CONTACT)).data.contact;
+}
+
+export async function getSiteInfo() {
+  return normalizeResponseFromStrapi(await query(GET_SITE_INFO)).data.siteInfo;
 }

@@ -4,6 +4,7 @@ import React, { useEffect } from "react"
 import fillStoreWithContact from "./fill-store-with-contact"
 import { ChildrenProp } from "@/types/props"
 import { useAppDispatch } from "@/hooks"
+import fillStoreWithSiteInfo from "./fill-store-with-site-info"
 
 type LayoutProps = {
   children: ChildrenProp
@@ -13,6 +14,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const dispatch = useAppDispatch()
   useEffect(() => {
     fillStoreWithContact(dispatch)
+    fillStoreWithSiteInfo(dispatch)
   })
   return (
     <div className="flex flex-col h-screen justify-between font-serif">

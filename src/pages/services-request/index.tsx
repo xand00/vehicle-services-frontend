@@ -74,7 +74,6 @@ const ServicesRequest: NextPage<ServiceRequestProps> = ({ services }) => {
       const vehicleModelSelectValue = watchVehicleModel
       if(!vehicleBrandSelectValue || !vehicleBrandSelectValue.data) return;
       const getVehicleModelsPayload = { name: vehicleModelSelectValue?.query ?? '', vehicle_brand_id: vehicleBrandSelectValue.data.id };
-      console.log(getVehicleModelsPayload)
       const vehicleModels = await getVehicleModels(getVehicleModelsPayload)
       setVehicleModels(vehicleModels)
     }

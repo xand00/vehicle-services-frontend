@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import modalSlice from './features/modal/modal-slice'
 import contactInfoSlice from './features/contact-info/contact-info-slice'
+import siteInfoSlice from './features/site-info/site-info-slice'
 
 export const store = configureStore({
   reducer: {
     modal: modalSlice,
-	  contactInfo: contactInfoSlice
+	  contactInfo: contactInfoSlice,
+    siteInfo: siteInfoSlice
   },
 })
 

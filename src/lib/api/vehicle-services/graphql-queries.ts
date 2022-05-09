@@ -123,6 +123,19 @@ export const GET_CONTACT = `
   }
 `
 
+export const GET_SITE_INFO = `
+  query SiteInfo {
+    siteInfo {
+      data {
+        id,
+        attributes {
+          name,
+        }
+      }
+    }
+  }
+`
+
 export const CREATE_SERVICES_REQUEST = gql`
 mutation CreateServicesRequest(
   $services: [ID!],

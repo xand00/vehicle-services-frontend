@@ -27,7 +27,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
               name="description"
               content="Техническое обслуживание шин и колес, ошиповка колес, ремонт колес"
             />
-            <title>Ремшип</title>
+            <title>Автосервис</title>
           </Head>
           <Component {...pageProps} />
         </Layout>

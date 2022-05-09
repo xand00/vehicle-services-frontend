@@ -1,24 +1,27 @@
 import PageTitle from "../components/page-title"
 import TestimonialList from "../components/testimonial-list"
 import CardReadMore from "../components/card-read-more"
-import { getServicesPromotion, getTestimonials } from "@/api/vehicle-services"
+import { getServicesPromotion, getSiteInfo, getTestimonials } from "@/api/vehicle-services"
 import Head from "next/head"
 import { ServicesPromotion } from "@/types/vehicle-services-models/services-promotion"
 import { Testimonial } from "@/types/vehicle-services-models/testimonial"
 import getStrapiMedia from "@/api/vehicle-services/get-strapi-media"
+import { SiteInfo } from "@/types/vehicle-services-models/site-info"
+import capitalize from "@/utils/string/capitalize"
 
 type HomePageTypes = {
   servicesPromotion: ServicesPromotion
-  testimonialList: Testimonial[]
+  testimonialList: Testimonial[],
+  siteInfo: SiteInfo
 }
 
-const HomePage = ({ testimonialList, servicesPromotion }: HomePageTypes) => {
+const HomePage = ({ testimonialList, servicesPromotion, siteInfo }: HomePageTypes) => {
   if(!servicesPromotion || !testimonialList) return;
   return (
     <>
       <Head>
-        <title>Ремшип | Главная</title>
-        <meta name="keywords" content="remship" />
+        <title>{siteInfo.name && siteInfo.name.length ? capitalize(siteInfo.name) : 'Автосервис'} | Главная</title>
+        <meta name="keywords" content={siteInfo.name ?? ''} />
       </Head>
       <PageTitle>Главная</PageTitle>
       <CardReadMore
@@ -36,7 +39,8 @@ const HomePage = ({ testimonialList, servicesPromotion }: HomePageTypes) => {
 export async function getServerSideProps() {
   const testimonialList = await getTestimonials()
   const servicesPromotion = await getServicesPromotion()
-  return { props: { testimonialList, servicesPromotion } }
+  const siteInfo = await getSiteInfo()
+  return { props: { testimonialList, servicesPromotion, siteInfo } }
 }
 
 export default HomePage
