@@ -13,3 +13,9 @@ docker build . --tag vehicle_services_frontend__next_js:development_$(git rev-pa
 ```console
 docker run -p 3000:3000 imageId
 ```
+
+## Docker-compose local development
+```console
+docker run --rm -v $(pwd):$(pwd) -w $(pwd) node:16-alpine yarn install --frozen-lockfile
+docker-compose up
+```
