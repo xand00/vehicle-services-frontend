@@ -14,10 +14,11 @@ type ServicesProps = {
 
 const Services: NextPage<ServicesProps> = ({ services, siteInfo }) => {
   const siteInfoName = siteInfo.name && siteInfo.name.length ? capitalize(siteInfo.name) : 'Автосервис'
+  const title = `${siteInfoName} | Услуги`
   return (
     <>
       <Head>
-        <title>{siteInfoName} | Услуги</title>
+        <title>{title}</title>
         <meta name="keywords" content={`${siteInfoName} услуги`} />
       </Head>
       <PageTitle>Услуги</PageTitle>

@@ -17,10 +17,12 @@ type HomePageTypes = {
 
 const HomePage = ({ testimonialList, servicesPromotion, siteInfo }: HomePageTypes) => {
   if(!servicesPromotion || !testimonialList) return;
+  const siteInfoName = siteInfo.name && siteInfo.name.length ? capitalize(siteInfo.name) : 'Автосервис'
+  const title = `${siteInfoName} | Главная`
   return (
     <>
       <Head>
-        <title>{siteInfo.name && siteInfo.name.length ? capitalize(siteInfo.name) : 'Автосервис'} | Главная</title>
+        <title>{title}</title>
         <meta name="keywords" content={siteInfo.name ?? ''} />
       </Head>
       <PageTitle>Главная</PageTitle>
