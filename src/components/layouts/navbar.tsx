@@ -1,11 +1,9 @@
 import Link from "next/link"
 import { useRouter } from "next/router"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import Email from "@/components/contact-info/email"
 import PhoneNumber from "@/components/contact-info/phone-number"
-import Logo from "@/components/logo"
 import Location from "../contact-info/location"
-import { useAppSelector } from "@/hooks"
 import LogoWithSiteName from "../logo-with-site-name"
 
 const Navbar: React.FC = () => {
