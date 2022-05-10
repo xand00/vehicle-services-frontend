@@ -7,8 +7,8 @@ const LogoWithSiteName: React.FC = () => {
     return (
         <Link href="/">
             <a className="flex items-center max-w-max">
-                <Logo wrapperClasses="h-12" svgClasses="h-12"></Logo>
-                <span className="font-medium text-2xl ml-3 capitalize">{siteInfoName ?? ''}</span>
+                <Logo wrapperClasses="h-10" svgClasses="h-10"></Logo>
+                <span className="font-medium text-md ml-1 capitalize">{siteInfoName ?? ''}</span>
             </a>
         </Link>
     )
