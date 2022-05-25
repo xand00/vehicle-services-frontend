@@ -28,7 +28,7 @@ deploy:
     - helm upgrade
       --install
       --set container.image=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-      --set replicaCount=3
+      --set replicaCount=$REPLICA_COUNT
       --set PORT=3000
       $CI_PROJECT_NAME
       .
