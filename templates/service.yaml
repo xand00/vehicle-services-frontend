@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: {{ .Release.Name }}-service
+    labels:
+        env: prod
+        owner: xand00
+spec:
+    selector:
+        project: {{ .Release.Name }}
+    type: LoadBalancer
+    ports:
+      - name: {{ .Release.Name }}
+        protocol: TCP
+        port: {{ .Values.port | default 3000 }}
+        targetPort: 3000

@@ -1,11 +1,7 @@
-image: docker:20.10.14-alpine3.15
-
 stages:
   - build
   - deploy
-
-services:
- - docker:20.10.14-dind-alpine3.15
+  - undeploy
 
 build:
   stage: build
@@ -15,22 +11,34 @@ build:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - docker build
-      --build-arg NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL
       --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
       .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-
+    - docker rmi $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
 deploy:
   stage: deploy
   tags:
-    - vehicle-services-prod-shell
+    - shell-kubectl-xand00
+  when: manual
   before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - kubectl config use-context vehicle-services/backend/vehicle-services-backend-strapi:shipovka-gitlab-agent
+    - kubectl delete secret regcred || true
+    - kubectl create secret docker-registry regcred --docker-server=$CI_REGISTRY --docker-username=$CI_REGISTRY_USER --docker-password=$READ_REGISTRY_TOKEN
   script:
-    - docker container rm $CI_PROJECT_NAME -f
-    - docker rmi $(docker images -q $CI_PROJECT_NAME) -f
-    - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_PROJECT_NAME
-    - docker run --name $CI_PROJECT_NAME -d -p 80:3000 $CI_PROJECT_NAME
-  rules:
-    - when: manual
+    - helm upgrade
+      --install
+      --set container.image=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+      --set replicaCount=3
+      --set PORT=1337
+      --set NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL
+      $CI_PROJECT_NAME
+      .
+undeploy:
+  stage: undeploy
+  tags:
+    - shell-kubectl-xand00
+  when: manual
+  before_script:
+    - kubectl config use-context vehicle-services/backend/vehicle-services-backend-strapi:shipovka-gitlab-agent
+  script:
+    - helm uninstall $CI_PROJECT_NAME
