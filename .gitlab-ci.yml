@@ -21,7 +21,7 @@ deploy:
     - shell-kubectl-xand00
   when: manual
   before_script:
-    - kubectl config use-context vehicle-services/backend/vehicle-services-backend-strapi:shipovka-gitlab-agent-frontend
+    - kubectl config use-context vehicle-services/frontend/vehicle-services-frontend:shipovka-gitlab-agent-frontend
     - kubectl delete secret regcred || true
     - kubectl create secret docker-registry regcred --docker-server=$CI_REGISTRY --docker-username=$CI_REGISTRY_USER --docker-password=$READ_REGISTRY_TOKEN
   script:
@@ -39,6 +39,6 @@ undeploy:
     - shell-kubectl-xand00
   when: manual
   before_script:
-    - kubectl config use-context vehicle-services/backend/vehicle-services-backend-strapi:shipovka-gitlab-agent-frontend
+    - kubectl config use-context vehicle-services/frontend/vehicle-services-frontend:shipovka-gitlab-agent-frontend
   script:
     - helm uninstall $CI_PROJECT_NAME
