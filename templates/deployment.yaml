@@ -19,6 +19,6 @@ spec:
                 image: {{ .Values.container.image }}
                 imagePullPolicy: IfNotPresent
                 ports:
-                    - containerPort: 1337
+                    - containerPort: 3000
             imagePullSecrets:
               - name: regcred
