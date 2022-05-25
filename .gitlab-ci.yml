@@ -30,7 +30,6 @@ deploy:
       --set container.image=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
       --set replicaCount=3
       --set PORT=1337
-      --set NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL
       $CI_PROJECT_NAME
       .
 undeploy:

@@ -20,8 +20,5 @@ spec:
                 imagePullPolicy: IfNotPresent
                 ports:
                     - containerPort: 1337
-                env:
-                  - name: NEXT_PUBLIC_BACKEND_URL
-                    value: {{ .Values.NEXT_PUBLIC_BACKEND_URL | quote }}
             imagePullSecrets:
               - name: regcred
