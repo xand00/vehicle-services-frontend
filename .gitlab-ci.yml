@@ -29,7 +29,7 @@ deploy:
       --install
       --set container.image=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
       --set replicaCount=3
-      --set PORT=1337
+      --set PORT=3000
       $CI_PROJECT_NAME
       .
 undeploy:
