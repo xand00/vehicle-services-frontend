@@ -112,7 +112,7 @@
     }
 
     .navbar-link {
-        @apply h-10 my-2 lg:my-0 lg:ml-2 px-7  md:px-10 text-center flex-center bg-gray-300;
+        @apply h-10 my-2 lg:ml-2 px-7 md:px-10 text-center flex-center bg-gray-300;
         
         &.active {
             @apply text-white bg-gray-800;
