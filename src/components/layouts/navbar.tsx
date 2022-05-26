@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
   }
   return (
     <div className="bg-white border-b-2 border-gray-500 sticky top-0 z-10">
-      <div className="xl:container xl:mx-auto grid grid-cols-6 gap-2 md:grid-cols-4 xl:grid-cols-5 md:justify-items-none my-3 mx-3">
+      <div className="xl:container xl:mx-auto grid grid-cols-6 gap-y-2 md:grid-cols-4 xl:grid-cols-5 md:justify-items-none my-3 mx-3">
         <div className="col-span-3 md:col-span-1">
           <LogoWithSiteName />
         </div>
