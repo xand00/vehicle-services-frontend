@@ -18,13 +18,16 @@ ENV NEXT_PUBLIC_BACKEND_URL $NEXT_PUBLIC_BACKEND_URL
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
+ARG NODE_ENV=production
+ENV NODE_ENV $NODE_ENV
+
 RUN yarn build
 
 # 3. Production image, copy all the files and run next
 FROM node:16-alpine AS runner
 WORKDIR /app
 
-ARG NODE_ENV
+ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 
 RUN addgroup -g 1001 -S nodejs
@@ -42,8 +45,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
-ARG PORT
-
+ARG PORT=3000
 EXPOSE $PORT
 
 ENV PORT $PORT
